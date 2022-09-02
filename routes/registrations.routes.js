@@ -8,17 +8,20 @@ const {
   deleteRegistration,
 } = require('../controllers/registrations.controller');
 
+//Middlewares
+const { registrationExists } = require('../middlewares/registration.mw');
+
 const registrationsRouters = express.Router();
 
 //Registrations endpoints
 registrationsRouters.get('/', getAllRegistrations);
 
-registrationsRouters.get('/:id', getOneRegistration);
+registrationsRouters.get('/:id', registrationExists, getOneRegistration);
 
 registrationsRouters.post('/', createRegistration);
 
-registrationsRouters.patch('/:id', updateRegistration);
+registrationsRouters.patch('/:id', registrationExists, updateRegistration);
 
-registrationsRouters.delete('/:id', deleteRegistration);
+registrationsRouters.delete('/:id', registrationExists, deleteRegistration);
 
 module.exports = { registrationsRouters };

@@ -17,16 +17,8 @@ const getAllRegistrations = async (req, res) => {
 
 const getOneRegistration = async (req, res) => {
   try {
-    const { id } = req.params;
-    //Checking if registration exists
-    const registration = await Registrations.findOne({ where: { id } });
+    const { registration } = req;
 
-    if (!registration) {
-      return res.status(404).json({
-        status: 'error',
-        message: 'Registration not found',
-      });
-    }
     res.status(200).json({
       status: 'success',
       data: {
@@ -42,9 +34,8 @@ const createRegistration = async (req, res) => {
   try {
     const { entranceTime } = req.body;
 
-    const newRegistration = await Registrations.create({
-      entranceTime,
-    });
+    const newRegistration = await Registrations.create({ entranceTime });
+
     res.status(201).json({
       status: 'sucess',
       data: { newRegistration },
@@ -57,18 +48,8 @@ const createRegistration = async (req, res) => {
 const updateRegistration = async (req, res) => {
   try {
     const { exitTime } = req.body;
-    const { id } = req.params;
+    const { registration } = req;
 
-    //Confirm existance
-    const registration = await Registrations.findOne({ where: { id } });
-
-    // If it does not exist
-    if (!registration) {
-      return res.status(404).json({
-        status: 'error',
-        message: 'Registration not found',
-      });
-    }
     registration.update({ exitTime });
 
     res.status(200).json({
@@ -82,18 +63,9 @@ const updateRegistration = async (req, res) => {
 
 const deleteRegistration = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { registration } = req;
 
-    //Confirm existance of registration
-    const registration = await Registrations.findOne({ where: { id } });
-    //If it does not exist display error message.
-    if (!registration) {
-      return res.status(404).json({
-        status: 'error',
-        message: 'Registration not found',
-      });
-    }
-    registration.update({ status: 'Out' });
+    registration.update({ status: 'Deleted' });
 
     res.status(200).json({ status: 'success' });
   } catch (error) {
