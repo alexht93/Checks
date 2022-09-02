@@ -50,7 +50,7 @@ const updateRegistration = async (req, res) => {
     const { exitTime } = req.body;
     const { registration } = req;
 
-    registration.update({ exitTime });
+    registration.update({ exitTime, status: 'Out' });
 
     res.status(200).json({
       status: 'success',
