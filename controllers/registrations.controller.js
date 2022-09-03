@@ -65,7 +65,7 @@ const deleteRegistration = async (req, res) => {
   try {
     const { registration } = req;
 
-    registration.update({ status: 'Deleted' });
+    registration.update({ status: 'Cancelled' });
 
     res.status(200).json({ status: 'success' });
   } catch (error) {
